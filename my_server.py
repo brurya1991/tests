@@ -1,5 +1,6 @@
 import socket
 from threading import Thread
+from time import sleep
 
 
 class ServerHttpUtils:
@@ -22,6 +23,7 @@ class ServerHttpUtils:
         # Close socket
         print("Shutting down the server...")
         self.server_socket.close()
+        sleep(5)
 
     def connect(self):
         while True:
