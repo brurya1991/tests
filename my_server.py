@@ -40,4 +40,4 @@ class ServerHttpUtils:
     def start_server(self):
         # Set server connection for client as separate Thread
         thread1 = Thread(target=self.connect)
-        thread1.start()
+        thread1.start() 
