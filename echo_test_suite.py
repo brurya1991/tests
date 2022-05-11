@@ -12,7 +12,8 @@ import my_server
 def http_server():
     server = my_server.ServerHttpUtils()
     server.create_server()
-    yield server  # return server and close it at the end of the test
+    yield server 
+    print("CleanUp")
     server.close_server()
 
 
@@ -20,6 +21,7 @@ def http_server():
 def http_client(http_server):
     connection = http.client.HTTPConnection(http_server.SERVER_HOST, http_server.SERVER_PORT, timeout=10)
     yield connection
+    print("CleanUp")
     connection.close()
 
 
