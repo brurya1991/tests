@@ -1,7 +1,7 @@
 import http.client
 import pytest
 
-from pythonProject.venv import my_server
+import my_server
 
 
 @pytest.fixture()
