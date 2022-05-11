@@ -1,4 +1,4 @@
-import validate_expected_response, get_request, validate_no_response
+from test_utils import validate_expected_response, get_request, validate_no_response
 
 
 def test_get_request(http_server, http_client):
