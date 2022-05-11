@@ -2,7 +2,7 @@
 ## Test resurces: 
 ### my_server.py:
 #### create the http server with it's functions (e.g. create, start, stop server)
-### test_utils.py: 
+### test utils: 
 ####   1. Setup: create server and client and cleanUp (close it)
 ####   2. Action: send GET request and return the response
 ####   3. Validation: validate response status and no response 
