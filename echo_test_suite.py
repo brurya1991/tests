@@ -1,14 +1,19 @@
 import http.client
 import pytest
 
-import my_server
+from pythonProject.venv import my_server
 
 
+# Test Utilities:
+# - http server: create a server that contains "start" and "stop" functions
+# - http client: create and close a client connection to the created http server
+# - send a request: send a "get" request to the server and return the response
+# - Validation functions: validate response and no response
 @pytest.fixture()
 def http_server():
     server = my_server.ServerHttpUtils()
     server.create_server()
-    yield server
+    yield server  # return server and close it at the end of the test
     server.close_server()
 
 
@@ -19,9 +24,9 @@ def http_client(http_server):
     connection.close()
 
 
-def send_request(http_client):
+def get_request(http_client):
     try:
-        print("Sending request...")
+        print("Sending GET request...")
         http_client.request("GET", "/")
         return http_client.getresponse()
     except ConnectionRefusedError:
@@ -30,10 +35,11 @@ def send_request(http_client):
 
 def validate_expected_response(response):
     if response:
-        print("Status: {} and reason: {}".format(response.status, response.reason))
         if response.status != 200 or response.reason != "OK":
             pytest.fail(f"response result is:\nStatus: {response.status} and Reason: {response.reason} "
                         f"\nnot as expected: Status: 200 and reason: OK")
+        else:
+            print("PASS: Status: {} and reason: {} as expected".format(response.status, response.reason))
     else:
         pytest.fail("There is NO response!")
 
@@ -43,10 +49,12 @@ def validate_no_response(response):
         print("Status: {} and reason: {}".format(response.status, response.reason))
         pytest.fail("Got a response! Not as expected!")
     else:
-        print("There is NO response as expected")
+        print("PASS: There is no response, as expected")
 
 
-def test_send_request(http_server, http_client):
-    validate_expected_response(send_request(http_client))
+def test_get_request(http_server, http_client):
+    print("STEP 1: Send GET request and validate response status is ok and 200")
+    validate_expected_response(get_request(http_client))
+    print("STEP 2: Stop http server, send GET request and validate there is no response")
     http_server.close_server()
-    validate_no_response(send_request(http_client))
+    validate_no_response(get_request(http_client))
