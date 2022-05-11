@@ -8,7 +8,7 @@ import pytest
 import my_server
 
 
-@pytest.fixture()
+@pytest.fixture(scope='session')
 def http_server():
     server = my_server.ServerHttpUtils()
     server.create_server()
@@ -17,7 +17,7 @@ def http_server():
     server.close_server()
 
 
-@pytest.fixture()
+@pytest.fixture(scope='session')
 def http_client(http_server):
     connection = http.client.HTTPConnection(http_server.SERVER_HOST, http_server.SERVER_PORT, timeout=10)
     yield connection
