@@ -48,6 +48,6 @@ def validate_no_response(response):
 
 def test_send_request(http_server, http_client):
     validate_expected_response(send_request(http_client))
-    http_server.close_server()
+    http_client.close()
     http_server.close_server()
     validate_no_response(send_request(http_client))
