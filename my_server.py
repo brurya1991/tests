@@ -23,7 +23,7 @@ class ServerHttpUtils:
         # Close socket
         print("Shutting down the server...")
         self.server_socket.close()
-        sleep(20)
+        sleep(5)
 
     def connect(self):
         while True:
