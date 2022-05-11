@@ -1,3 +1,4 @@
+import multiprocessing
 import socket
 from threading import Thread
 from time import sleep
@@ -9,6 +10,8 @@ class ServerHttpUtils:
         self.SERVER_HOST = '127.0.0.1'
         self.SERVER_PORT = 8000
         self.server_socket = None
+        self.client_connection = None
+        self.proc = None
 
     def create_server(self):
         # Create socket
@@ -23,7 +26,9 @@ class ServerHttpUtils:
         # Close socket
         print("Shutting down the server...")
         self.server_socket.close()
-        sleep(30)
+        # Terminate the process
+        self.proc.terminate()  # sends a SIGTERM
+        sleep(10)
 
     def connect(self):
         while True:
@@ -39,5 +44,5 @@ class ServerHttpUtils:
 
     def start_server(self):
         # Set server connection for client as separate Thread
-        thread1 = Thread(target=self.connect)
-        thread1.start() 
+        self.proc = multiprocessing.Process(target=self.connect)
+        self.proc.start()
