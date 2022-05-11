@@ -21,11 +21,11 @@ def http_client(http_server):
 
 def send_request(http_client):
     try:
+        print("Sending request...")
         http_client.request("GET", "/")
-        response = http_client.getresponse()
+        return http_client.getresponse()
     except ConnectionRefusedError:
         return False
-    return response
 
 
 def validate_expected_response(response):
