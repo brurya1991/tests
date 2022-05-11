@@ -27,4 +27,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Analysing the code with pylint
       run: |
-        pytest echo_test_suite.py
+        pytest echo_test_suite.py -s
